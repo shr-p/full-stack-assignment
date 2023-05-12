@@ -24,18 +24,12 @@ app.get('/', (req, res)=>{
 app.post('/signup', function(req, res) {
   // Add logic to decode body
   // body should have email and password
-  let email = req.body().email
-  let password = req.body().password
-
-  let flag = false
+  let email = req.body.email
+  let password = req.body.password
   //Store email and password (as is for now) in the USERS array above (only if the user with the given email doesnt exist)
-  for (var i = 0; i < USERS.length; i++) {
-    if(email == USERS[i].email){
-      flag = true
-      break
-    }
-  }
-  if(flag === false) USERS.push({email : email, password : password})
+  const userExits = USERS.some(element => element.email == email)
+
+  if(!userExits) USERS.push({email : email, password : password})
   // return back 200 status code to the client
   res.sendStatus(200)
   res.send('Hello World!')
@@ -44,8 +38,8 @@ app.post('/signup', function(req, res) {
 app.post('/login', function(req, res) {
   // Add logic to decode body
   // body should have email and password
-  let email = req.body().email
-  let password = req.body().password
+  let email = req.body.email
+  let password = req.bod.password
 
   let flag = false
   // Check if the user with the given email exists in the USERS array
@@ -78,6 +72,7 @@ app.get('/questions', function(req, res) {
 
 app.get("/submissions", function(req, res) {
    // return the users submissions for this problem
+  
   res.send("Hello World from route 4!")
 });
 
